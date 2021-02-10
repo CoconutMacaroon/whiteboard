@@ -2,6 +2,9 @@ const { getArgs } = require("./utils");
 const startFrontendDevServer = require("./server-frontend-dev");
 const startBackendServer = require("./server-backend");
 
+// server port
+const SERVER_PORT = 80;
+
 const SERVER_MODES = {
     PRODUCTION: 1,
     DEVELOPMENT: 2,
@@ -22,11 +25,11 @@ const server_mode = args.mode === "production" ? SERVER_MODES.PRODUCTION : SERVE
 
 if (server_mode === SERVER_MODES.DEVELOPMENT) {
     console.info("Starting server in development mode.");
-    startFrontendDevServer(8080);
+    startFrontendDevServer(SERVER_PORT);
     // this time, it's the frontend server that is on port 8080
     // requests for the backend will be proxied to prevent cross origins errors
     startBackendServer(3000);
 } else {
     console.info("Starting server in production mode.");
-    startBackendServer(process.env.PORT || 8080);
+    startBackendServer(process.env.PORT || SERVER_PORT);
 }
